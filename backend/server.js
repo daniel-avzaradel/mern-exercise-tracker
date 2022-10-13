@@ -16,11 +16,11 @@ mongoose.connect(uri);
 
 const connection = mongoose.connection;
 connection.once('open', () => {
-  console.log('Mongodb Connected successfully');
+  console.log('Mongodb Connected successfully'.yellow);
 });
 
-const exercisesRouter = require('./models/exercises.model');
-const usersRouter = require('./models/users.model');
+const exercisesRouter = require('./routes/exercises');
+const usersRouter = require('./routes/users');
 
 app.use('/exercise', exercisesRouter);
 app.use('/users', usersRouter);
