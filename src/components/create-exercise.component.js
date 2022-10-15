@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const CreateExercise = () => {
   const [users, setUsers] = useState([]);
@@ -6,10 +8,14 @@ const CreateExercise = () => {
   const [username, setUsername] = useState('user');
   const [description, setDescription] = useState();
   const [duration, setDuration] = useState();
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(new Date());
 
   const changeUsername = (e) => {
     setUsername(e.target.value);
+  };
+
+  const changeDate = (date) => {
+    setDate(date);
   };
 
   const handleSumbit = (e) => {
@@ -43,7 +49,7 @@ const CreateExercise = () => {
         <br />
         <div className="form-group">
           <label htmlFor="">Date: </label>
-          <input type="text" className="form-control" value={date} />
+          <DatePicker selected={date} onChange={changeDate} />
         </div>
         <br />
         <div className="form-group">
