@@ -3,9 +3,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const CreateExercise = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(['test user']);
 
-  const [username, setUsername] = useState('user');
+  const [username, setUsername] = useState('test user');
   const [description, setDescription] = useState();
   const [duration, setDuration] = useState();
   const [date, setDate] = useState(new Date());
@@ -14,12 +14,31 @@ const CreateExercise = () => {
     setUsername(e.target.value);
   };
 
+  const changeDescription = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const changeDuration = (e) => {
+    setDuration(Number(e.target.value));
+  };
+
   const changeDate = (date) => {
     setDate(date);
   };
 
   const handleSumbit = (e) => {
     e.preventDefault();
+
+    const exercise = {
+      username: username,
+      description: description,
+      duration: duration,
+      date: date,
+    };
+
+    console.log(exercise);
+
+    window.location = '/';
   };
 
   return (
@@ -34,17 +53,35 @@ const CreateExercise = () => {
             required
             className="form-control"
             onChange={changeUsername}
-          ></select>
+          >
+            {users.map((user) => {
+              return (
+                <option key={user} value={user}>
+                  {user}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <br />
         <div className="form-group">
           <label htmlFor="">Description: </label>
-          <input type="text" className="form-control" value={description} />
+          <input
+            type="text"
+            className="form-control"
+            value={description}
+            onChange={changeDescription}
+          />
         </div>
         <br />
         <div className="form-group">
           <label htmlFor="">Duration (in minutes): </label>
-          <input type="text" className="form-control" value={duration} />
+          <input
+            type="text"
+            className="form-control"
+            value={duration}
+            onChange={changeDuration}
+          />
         </div>
         <br />
         <div className="form-group">
