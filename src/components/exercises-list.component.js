@@ -11,6 +11,13 @@ const ExerciseList = () => {
     });
   }, []);
 
+  const handleDelete = async (id) => {
+    await axios.delete(`http://localhost:5000/exercises/${id}`).then(() => {
+      let newExercises = exercises.filter((ex) => ex._id !== id);
+      setExercises(newExercises);
+    });
+  };
+
   return (
     <div>
       <h3>Exercise List Log</h3>
@@ -37,7 +44,9 @@ const ExerciseList = () => {
                     <td>{exercise.date}</td>
                     <td>
                       <Link to={`edit/${exercise._id}`}>Edit</Link> |{' '}
-                      <a href="">Delete</a>
+                      <a href="#" onClick={() => handleDelete(exercise._id)}>
+                        Delete
+                      </a>
                     </td>
                   </tr>
                 );

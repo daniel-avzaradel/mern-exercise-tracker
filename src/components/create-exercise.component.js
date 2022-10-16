@@ -15,7 +15,7 @@ const CreateExercise = () => {
   useEffect(() => {
     axios.get('http://localhost:5000/users').then((res) => {
       setUsers(res.data);
-      setUsername(res.data[0]);
+      setUsername(res.data[0].username);
     });
   }, []);
 
@@ -46,9 +46,9 @@ const CreateExercise = () => {
     };
 
     console.log(exercise);
-    axios.post('http://localhost:5000/exercise/add', exercise);
+    axios.post('http://localhost:5000/exercises/add', exercise);
 
-    // window.location = '/';
+    window.location = '/';
   };
 
   return (
@@ -70,7 +70,7 @@ const CreateExercise = () => {
                   <option
                     key={user.username}
                     value={user.username}
-                    selected="selected"
+                    defaultValue={user.username}
                   >
                     {user.username}
                   </option>
@@ -84,7 +84,7 @@ const CreateExercise = () => {
           <input
             type="text"
             className="form-control"
-            value={description}
+            defaultValue={description}
             onChange={changeDescription}
           />
         </div>

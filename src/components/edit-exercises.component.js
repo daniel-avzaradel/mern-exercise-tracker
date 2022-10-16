@@ -53,9 +53,9 @@ const EditExercise = () => {
     };
 
     console.log(exercise);
-    axios.patch('http://localhost:5000/exercise/update/:id', exercise);
+    axios.post(`http://localhost:5000/exercises/update/${id}`, exercise);
 
-    // window.location = '/';
+    window.location = '/';
   };
 
   return (
