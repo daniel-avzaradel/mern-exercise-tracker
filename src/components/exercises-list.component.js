@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const ExerciseList = () => {
   const [exercises, setExercises] = useState();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/exercise').then((res) => {
+    axios.get('http://localhost:5000/exercises').then((res) => {
       setExercises(res.data);
     });
   }, []);
@@ -13,9 +14,10 @@ const ExerciseList = () => {
   return (
     <div>
       <h3>Exercise List Log</h3>
+      <br />
       <div className="form-group">
-        <table class="table">
-          <thead>
+        <table className="table">
+          <thead className="table-secondary">
             <tr>
               <th scope="col">Username</th>
               <th scope="col">Description</th>
@@ -34,19 +36,12 @@ const ExerciseList = () => {
                     <td>{exercise.duration}</td>
                     <td>{exercise.date}</td>
                     <td>
-                      <button className="btn btn-warning">Edit</button>
-                      <button className="btn btn-danger m-2">Delete</button>
+                      <Link to={`edit/${exercise._id}`}>Edit</Link> |{' '}
+                      <a href="">Delete</a>
                     </td>
                   </tr>
                 );
               })}
-            {/* <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            */}
           </tbody>
         </table>
       </div>
