@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const CreateExercise = () => {
-  const [users, setUsers] = useState(['test user']);
+import axios from 'axios';
 
-  const [username, setUsername] = useState('test user');
+const CreateExercise = () => {
+  const [users, setUsers] = useState();
+
+  const [username, setUsername] = useState();
   const [description, setDescription] = useState();
   const [duration, setDuration] = useState();
   const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/users').then((res) => {
+      setUsers(res.data);
+      setUsername(res.data[0]);
+    });
+  }, []);
 
   const changeUsername = (e) => {
     setUsername(e.target.value);
@@ -37,8 +46,9 @@ const CreateExercise = () => {
     };
 
     console.log(exercise);
+    axios.post('http://localhost:5000/exercise/add', exercise);
 
-    window.location = '/';
+    // window.location = '/';
   };
 
   return (
@@ -54,13 +64,18 @@ const CreateExercise = () => {
             className="form-control"
             onChange={changeUsername}
           >
-            {users.map((user) => {
-              return (
-                <option key={user} value={user}>
-                  {user}
-                </option>
-              );
-            })}
+            {users &&
+              users.map((user) => {
+                return (
+                  <option
+                    key={user.username}
+                    value={user.username}
+                    selected="selected"
+                  >
+                    {user.username}
+                  </option>
+                );
+              })}
           </select>
         </div>
         <br />
@@ -79,7 +94,7 @@ const CreateExercise = () => {
           <input
             type="text"
             className="form-control"
-            value={duration}
+            defaultValue={duration}
             onChange={changeDuration}
           />
         </div>

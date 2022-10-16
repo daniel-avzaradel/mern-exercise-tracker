@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const CreateUser = () => {
-  const [username, setUsername] = useState('test user');
+  const [username, setUsername] = useState('Username test');
 
   const changeUsername = (e) => {
     setUsername(e.target.value);
@@ -13,6 +14,10 @@ const CreateUser = () => {
     const user = {
       username: username,
     };
+
+    axios
+      .post('http://localhost:5000/users/add', user)
+      .then((res) => console.log(res.data));
 
     console.log(user);
     setUsername('');
